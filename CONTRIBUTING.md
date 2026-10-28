@@ -1,6 +1,6 @@
 # Contribución y gobierno del repositorio
 
-## Etapa actual: solo esqueleto
+## Etapa actual: 
 
 La rama `main` contiene la configuración inicial de Spring Boot, React, PostgreSQL y la estructura documental. Todavía **no** hay funcionalidades de evaluación ni pruebas funcionales.
 
