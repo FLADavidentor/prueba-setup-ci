@@ -1,0 +1,5 @@
+# Copiar como .github/CODEOWNERS solo después de verificar los usuarios reales.
+# Los propietarios cambian semanalmente con la rotación de equipos.
+# Reemplazar @integrador-designado y @documentador-designado por cuentas válidas.
+* @integrador-designado
+/docs/ @documentador-designado

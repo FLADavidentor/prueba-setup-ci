@@ -1,0 +1,25 @@
+# Credenciales y datos locales
+.env
+.env.*
+!.env.example
+*.log
+.DS_Store
+Thumbs.db
+
+# Java / Maven / IDE
+backend/target/
+.idea/
+.vscode/
+*.iml
+.classpath
+.project
+.settings/
+
+# Node / Vite
+frontend/node_modules/
+frontend/dist/
+frontend/coverage/
+
+# Recursos locales y temporales
+tmp/
+*.bak

@@ -1,0 +1,31 @@
+name: Historia o funcionalidad
+description: Nueva funcionalidad transversal o de un tipo de evaluación
+title: "[FEATURE] "
+labels: [enhancement]
+body:
+  - type: input
+    id: req
+    attributes:
+      label: Requisito y caso de uso
+      placeholder: RF-001 / CU-001
+    validations:
+      required: true
+  - type: textarea
+    id: objective
+    attributes:
+      label: Objetivo y alcance
+      description: Qué cambiará para el usuario, sin proponer reglas no aprobadas.
+    validations:
+      required: true
+  - type: textarea
+    id: criteria
+    attributes:
+      label: Criterios de aceptación
+      placeholder: "- [ ] ..."
+    validations:
+      required: true
+  - type: input
+    id: owner
+    attributes:
+      label: Grupo y rol responsable
+      placeholder: G1 / Desarrollo

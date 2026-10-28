@@ -1,0 +1,21 @@
+name: Error o regresión
+description: Reportar comportamiento incorrecto sin divulgar datos personales
+title: "[BUG] "
+labels: [bug]
+body:
+  - type: textarea
+    id: repro
+    attributes:
+      label: Pasos para reproducir
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Resultado esperado y observado
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Entorno, commit y evidencia anonimizada
