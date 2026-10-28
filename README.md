@@ -1,4 +1,4 @@
-# Sistema Integrado de Evaluaciones — esqueleto inicial
+# Sistema Integrado de Evaluaciones 
 
 > **Alcance actual: solo configuración y estructura.** No incluye endpoints de negocio, cuestionarios, fórmulas, entidades, tablas de evaluación, autenticación ni reportes. La única clase Java es el punto de arranque de Spring Boot; el único componente React es una pantalla de bienvenida.
 
