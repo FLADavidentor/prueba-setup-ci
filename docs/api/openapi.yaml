@@ -1,6 +1,19 @@
 openapi: 3.0.3
 info:
   title: Sistema Integrado de Evaluaciones
-  version: 0.0.0
-  description: Esqueleto documental; todavía no hay endpoints REST de negocio aprobados.
-paths: {}
+  version: 0.0.1
+  description: Contrato de prueba para validar el CI.
+paths:
+  /api/estado:
+    get:
+      summary: Estado del sistema
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  estado:
+                    type: string
