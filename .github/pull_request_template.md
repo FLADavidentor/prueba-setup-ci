@@ -1,6 +1,6 @@
 ## Objetivo e issue
 
-- Issue / historia: 
+- Tarea ClickUp (DOC-n, DEV-n, INT-n o TEST-n): 
 - Semana y módulo: 
 - Resumen del cambio: 
 
@@ -12,7 +12,7 @@
 
 ## Validaciones
 
-- [ ] `mvn -f backend/pom.xml test`
+- [ ] `mvn -f backend/pom.xml verify` (con `docker compose up -d db`)
 - [ ] `npm run typecheck`, `npm test` y `npm run build` desde `frontend`
 - [ ] Evidencia o captura sin información sensible
 - [ ] Contratos y documentación actualizados
