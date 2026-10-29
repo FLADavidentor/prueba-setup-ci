@@ -108,11 +108,8 @@ jobs:
           curl -sf localhost:8080/v3/api-docs -o api-real.json || { cat backend.log; exit 1; }
       - name: Comparar la API real con docs/api/openapi.yaml
         run: |
-          OAS="docker run --rm -v $PWD:/w tufin/oasdiff"
-          echo "Contrato -> API real (falta o cambia algo del contrato):"
-          $OAS breaking /w/docs/api/openapi.yaml /w/api-real.json --fail-on ERR
-          echo "API real -> contrato (la API tiene algo que el contrato no tiene):"
-          $OAS breaking /w/api-real.json /w/docs/api/openapi.yaml --fail-on ERR
+          python3 -m pip install --quiet pyyaml
+          python3 .github/scripts/comparar_contrato.py docs/api/openapi.yaml api-real.json
 
   frontend-build:
     runs-on: ubuntu-latest

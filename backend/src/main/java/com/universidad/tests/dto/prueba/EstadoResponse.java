@@ -1,4 +1,4 @@
 package com.universidad.tests.dto.prueba;
 
-public record EstadoResponse(String estado) {
+public record EstadoResponse(String status) {
 }
