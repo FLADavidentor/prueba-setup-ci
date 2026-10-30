@@ -1,0 +1,64 @@
+name: Despliegue
+
+# main se despliega solo al fusionar; release, al crear la etiqueta v0.<semana>.0.
+# Desde la pestaña Actions (Run workflow) se puede ver el estado, los logs o redesplegar.
+on:
+  push:
+    branches: [main]
+    tags: ['v0.*.0']
+  workflow_dispatch:
+    inputs:
+      entorno:
+        description: Entorno
+        type: choice
+        options: [main, release]
+      accion:
+        description: Acción
+        type: choice
+        options: [estado, logs, desplegar]
+      etiqueta:
+        description: Solo para desplegar release (ej. v0.2.0)
+        required: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: despliegue-${{ github.event.inputs.entorno || (github.ref_type == 'tag' && 'release' || 'main') }}
+  cancel-in-progress: false
+
+jobs:
+  servidor:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Elegir entorno y acción
+        id: plan
+        env:
+          EVENTO: ${{ github.event_name }}
+          ENTORNO: ${{ github.event.inputs.entorno }}
+          ACCION: ${{ github.event.inputs.accion }}
+          ETIQUETA: ${{ github.event.inputs.etiqueta }}
+        run: |
+          if [ "$EVENTO" = push ] && [ "$GITHUB_REF_TYPE" = tag ]; then
+            echo "entorno=release" >> "$GITHUB_OUTPUT"; echo "orden=desplegar $GITHUB_REF_NAME" >> "$GITHUB_OUTPUT"
+          elif [ "$EVENTO" = push ]; then
+            echo "entorno=main" >> "$GITHUB_OUTPUT"; echo "orden=desplegar $GITHUB_SHA" >> "$GITHUB_OUTPUT"
+          else
+            REF=""
+            if [ "$ACCION" = desplegar ]; then
+              if [ "$ENTORNO" = main ]; then REF="$GITHUB_SHA"; else REF="$ETIQUETA"; fi
+            fi
+            echo "entorno=$ENTORNO" >> "$GITHUB_OUTPUT"; echo "orden=$ACCION $REF" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Ejecutar en el servidor
+        env:
+          LLAVE: ${{ secrets.VPS_SSH_KEY }}
+          HOSTS: ${{ secrets.VPS_KNOWN_HOSTS }}
+          SERVIDOR: ${{ secrets.VPS_HOST }}
+        run: |
+          install -m 700 -d ~/.ssh
+          printf '%s\n' "$LLAVE" > ~/.ssh/id_ed25519 && chmod 600 ~/.ssh/id_ed25519
+          printf '%s\n' "$HOSTS" > ~/.ssh/known_hosts
+          ssh -o BatchMode=yes "evaluaciones-${{ steps.plan.outputs.entorno }}@$SERVIDOR" "${{ steps.plan.outputs.orden }}"
